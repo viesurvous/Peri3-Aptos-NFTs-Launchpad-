@@ -150,15 +150,14 @@ const MintingApplication = (props) => {
               <Container className="mw-992">
                 <Row className="rounded-4 shadow-light border-row mx-auto">
                   {/** Collection Cover */}
-                  <Col md="6">
-                    {/**<span className="d-block">{collectionCoverUrl}</span>*/}
+                  <Col md="6" className={"py-0 px-0"}>
+                    <img src={collectionCoverUrl} alt={collectionName} className={"objectFit mw-100"}/>
                   </Col>
                   {/** Collection Mint Application */}
                   <Col md="6"className="p-3">
                   <div id="collection-info" className="">
-                
                     <div className="d-flex align-items-center my-3">
-                        <input type="range" max={candyMachineData.data.maxMintsPerWallet === undefined ? 10 : Math.min(candyMachineData.data.maxMintsPerWallet, candyMachineData.data.numUploadedTokens - candyMachineData.data.numMintedTokens)} value={mintInfo.numToMint} onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})} />
+                        <input type="range" min={1} max={candyMachineData.data.maxMintsPerWallet === undefined ? 10 : Math.min(candyMachineData.data.maxMintsPerWallet, candyMachineData.data.numUploadedTokens - candyMachineData.data.numMintedTokens)} value={mintInfo.numToMint} onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})} />
                         <button className={""} onClick={mint} disabled={!canMint}>Mint</button>
                         <h5 className="mx-3 mb-0">{candyMachineData.data.mintFee * mintInfo.numToMint} APT</h5>
                         <h5>{candyMachineData.data.numMintedTokens} / {COLLECTION_SIZE}</h5>
@@ -167,7 +166,7 @@ const MintingApplication = (props) => {
                     <div className="d-flex flex-column align-items-center my-3">
                       <h6>{timeLeftToMint.public === "LIVE" ? <span className={""}>LIVE</span> : <span className={""}> {timeLeftToMint.public.days + "d : " + timeLeftToMint.public.hours + "h : " + timeLeftToMint.public.minutes + "m : " + timeLeftToMint.public.seconds + "s"}</span>}</h6>
                     </div>
-                    <ProgressBar bgcolor={percentageMinted < 75 ? "rgb(206, 225, 253)" : "rgb(255, 159, 156)"} completed={percentageMinted.toFixed(2)} />
+                    <ProgressBar bgcolor={percentageMinted < 75 ? "#74f7de" : "rgb(255, 159, 156)"} completed={percentageMinted.toFixed(2)} />
                   </div>
                   </Col>
                 </Row>

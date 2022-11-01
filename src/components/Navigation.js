@@ -13,7 +13,7 @@ const Navigation = (props) => {
     <Navbar bg="dark" variant="dark" className="py-3 px-3" fixed="top">
       <Navbar.Brand>
         <a className="navbar-link" href="/">
-          <img style={{width: "50px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
+          <img style={{width: "70px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
         </a>
         <span>{props.title}</span>
       </Navbar.Brand>

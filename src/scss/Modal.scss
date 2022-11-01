@@ -1,0 +1,24 @@
+@import "./variables.scss";
+
+.modal-body {
+    .option {
+        border: none;
+        transition: all 0.2s ease-in-out;
+        background-color: $grey;
+        img {
+            width: 30px;
+            margin-right: 25px;
+            transition: all 0.2 ease-in-out;
+        }
+        &:hover {
+            padding: 20px 30px;
+            opacity: 0.95;
+            background-color: darken($grey, 4%);
+        }
+
+    }
+}
+
+.modal-content {
+    background-color: $grey!important;
+}

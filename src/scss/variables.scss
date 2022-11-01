@@ -1,0 +1,15 @@
+
+$grey: #212529;
+$light: rgb(206, 225, 253);
+$lightOpacity: rgb(206, 225, 253, 0.05);
+$success: rgb(255, 159, 156);
+* {
+  font-family: 'Roboto Mono', monospace!important;
+}
+$theme-colors: (
+  primary: $light,
+  dark: $grey,
+  light: $light,
+  success: $success
+);
+

@@ -17,7 +17,7 @@ return (
                 <Col sm={12} md={6}>
                     <blockquote className="launchpad-informations my-4 ts">
                         <h1>Premium launchpad for <strong>Aptos</strong> creators.</h1>
-                        <small>Premium - Low fee - Fully customizable</small>
+                        <small>Low fee - Fully customizable</small>
                     </blockquote>
                     <a target="_blank" rel="noreferrer" className="text-white text-bold text-decoration-none ts" href="https://forms.gle/Lts3a4oWEJTCiaVEA">Launch with {props.title}</a>
                 </Col>

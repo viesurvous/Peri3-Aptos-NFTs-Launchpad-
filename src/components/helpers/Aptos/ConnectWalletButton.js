@@ -5,7 +5,7 @@ import ConnectWalletModal from "./ConnectWalletModal"
 import { FaUser } from 'react-icons/fa';
 
 const ConnectWalletButton = (props) => {
-    const {connectButton, className, style, disabled} = props
+    const {connectButton, className, style, disabled, title, mint, mx} = props
 
     const wallet = useWallet()
     const [showModal, setShowModal] = useState(false)
@@ -18,9 +18,11 @@ const ConnectWalletButton = (props) => {
         wallet.disconnect()
     }
 
-    const button = <button disabled={disabled} className={`${'btn btn-outline-primary px-3 py-0 button-connect'} ${disabled ? "disabled" : ""}`} onClick={handleButtonClick} style={style}>
+    const button = <button disabled={disabled} className={`${className} ${'btn btn-outline-primary px-3 py-0 button-connect'} ${disabled ? "disabled" : ""} ${mx ? mx : ""}`} onClick={handleButtonClick} style={style}>
                         <div className="user-connect d-flex align-items-center">
-                            <FaUser/><span className="inner border-start border-primary ms-3 ps-3 py-2">{connectButton ? "Connect wallet":  "Log out"}</span></div>
+                            {!mint && <FaUser/>}
+                            <span className={mint ?"py-2 px-2 inner" : "border-start border-primary ms-3 ps-3 py-2"}>{connectButton ? title :  "Log out"}</span>
+                            </div>
                     </button>
 
     return (

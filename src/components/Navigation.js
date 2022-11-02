@@ -12,16 +12,14 @@ const Navigation = (props) => {
   return (
     <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light" fixed="top">
       <Navbar.Brand>
-        <a className="navbar-link" href="/">
           <img style={{width: "35px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
-        </a>
         <span className="me-1">{props.title}</span>
         <small style={{fontSize: "12px"}}>beta</small>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">
         {wallet.connected && <small className="me-3">{wallet.account?.address?.toString().slice(0, 4) + '…' + wallet.account?.address?.toString().slice(62, 66)}</small>}
-        <ConnectWalletButton connectButton={!wallet.connected} className="d-flex" />
+        <ConnectWalletButton title={"Connect wallet"} connectButton={!wallet.connected} className="d-flex" />
       </Navbar.Collapse>
     </Navbar>
     ); 

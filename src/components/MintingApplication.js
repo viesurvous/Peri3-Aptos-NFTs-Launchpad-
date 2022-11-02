@@ -6,6 +6,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import ProgressBar from "./ProgressBar"
 import Modal from "react-bootstrap/Modal"
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import { AptosClient } from "aptos";
@@ -81,7 +82,7 @@ const MintingApplication = (props) => {
         const txStatusError = txInfo.vm_status;
         console.error(`Mint not successful: ${txStatusError}`);
         let errorMessage = handledErrorMessages.get(txStatusError);
-        errorMessage = errorMessage === undefined ? "Unkown error occured. Try again." : errorMessage;
+        errorMessage = errorMessage === undefined ? `Mint aborted : ${txStatusError}` : errorMessage;
 
         toast.error(errorMessage);
     } else {
@@ -94,7 +95,6 @@ const MintingApplication = (props) => {
   }
 
   async function fetchCandyMachineData(indicateIsFetching = false) {
-    console.log("Fetching candy machine data...")
     if (indicateIsFetching) setIsFetchignCmData(true)
     const cmResourceAccount = await cmHelper.getCandyMachineResourceAccount();
     if (cmResourceAccount === null) {
@@ -129,57 +129,57 @@ const MintingApplication = (props) => {
     
   }, [candyMachineData])
 
-  // useEffect(() => {
-  //   setCanMint(wallet.connected && candyMachineData.data.isPublic && parseInt(candyMachineData.data.numUploadedTokens) > parseInt(candyMachineData.data.numMintedTokens) && timeLeftToMint.presale === "LIVE")
-  // }, [wallet, candyMachineData, timeLeftToMint])
+
   useEffect(() => {
     setCanMint(true);
   }, [wallet, candyMachineData, timeLeftToMint])
 
   const price = (candyMachineData.data.mintFee * mintInfo.numToMint).toFixed(2);
   const percentageMinted = 100 * candyMachineData.data.numMintedTokens / COLLECTION_SIZE;
-  
+
   return (
     <div className="main bg-dark text-white d-flex align-items-center justify-content-center vh-100">
-      {/** If Wallet Connected */}
-      {wallet.connected ?
+      {isFetchignCmData ?  
+        <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
+      : 
         <>
-        {isFetchignCmData ?  <Waiter spinner={true} msg={"Fetching data..."} customColor={"rgb(255, 159, 156)"}/>: 
-          <>
-            {!mintInfo.minting ? 
-              <Container className="mw-992">
-                <Row className="rounded-4 shadow-light border-row mx-auto">
-                  {/** Collection Cover */}
-                  <Col md="6" className={"py-0 px-0"}>
-                    <img src={collectionCoverUrl} alt={collectionName} className={"objectFit mw-100"}/>
-                  </Col>
-                  {/** Collection Mint Application */}
-                  <Col md="6"className="p-3">
-                  <div id="collection-info" className="">
-                    <div className="d-flex align-items-center my-3">
-                        <input type="range" min={1} max={candyMachineData.data.maxMintsPerWallet === undefined ? 10 : Math.min(candyMachineData.data.maxMintsPerWallet, candyMachineData.data.numUploadedTokens - candyMachineData.data.numMintedTokens)} value={mintInfo.numToMint} onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})} />
-                        <button className={""} onClick={mint} disabled={!canMint}>Mint</button>
-                        <h5 className="mx-3 mb-0">{candyMachineData.data.mintFee * mintInfo.numToMint} APT</h5>
-                        <h5>{candyMachineData.data.numMintedTokens} / {COLLECTION_SIZE}</h5>
-                    </div>
-                        {/** MINT STATE! */}
-                    <div className="d-flex flex-column align-items-center my-3">
-                      <h6>{timeLeftToMint.public === "LIVE" ? <span className={""}>LIVE</span> : <span className={""}> {timeLeftToMint.public.days + "d : " + timeLeftToMint.public.hours + "h : " + timeLeftToMint.public.minutes + "m : " + timeLeftToMint.public.seconds + "s"}</span>}</h6>
-                    </div>
-                    <ProgressBar bgcolor={percentageMinted < 75 ? "#74f7de" : "rgb(255, 159, 156)"} completed={percentageMinted.toFixed(2)} />
+          {!mintInfo.minting ? 
+            <Container className="mw-992">
+              <Row className="rounded-4 shadow border-row mx-auto">
+                {/** Collection Cover */}
+                <Col md="6" className={"py-0 px-0 d-flex justify-content-center align-items-center"}>
+                  {collectionCoverUrl ? 
+                    <img className="w-100" src={collectionCoverUrl}/>
+                    :
+                    <Waiter spinner={true} customColor={"rgba(255, 159, 156, 0.7)"}/>
+                  }
+                </Col>
+                {/** Collection Mint Application */}
+                <Col md="6"className="p-3">
+                  <div className="">
+                    {mintInfo.numToMint}
+                      <input min={1} max={candyMachineData.data.maxMintsPerWallet === undefined ? 10 : Math.min(candyMachineData.data.maxMintsPerWallet, candyMachineData.data.numUploadedTokens - candyMachineData.data.numMintedTokens)} value={mintInfo.numToMint} onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})} />
+                      <h5>Item price :  {candyMachineData.data.mintFee} APT</h5>
+                      <h5>Total : {price} APT</h5>
+                      <h5>Minted : {candyMachineData.data.numMintedTokens} / {COLLECTION_SIZE}</h5>
                   </div>
-                  </Col>
-                </Row>
-              </Container>
-            :
-            <Waiter spinner={true} msg={"Minting"} customColor={"#53fade"}/>
-            }
-          </>
+                    
+                  {/** MINT STATE! */}
+                  {timeLeftToMint.public === "LIVE" ? <span className={""}>LIVE</span> : <span className={""}> {timeLeftToMint.public.days + "d : " + timeLeftToMint.public.hours + "h : " + timeLeftToMint.public.minutes + "m : " + timeLeftToMint.public.seconds + "s"}</span>}
+
+                  {/** PROGRESS BAR */}
+                  <ProgressBar bgcolor={percentageMinted < 75 ? "#74f7de" : "rgb(255, 159, 156)"} completed={percentageMinted.toFixed(2)} itemsLeft={candyMachineData.data.numMintedTokens +"/"+ COLLECTION_SIZE}/>
+                  
+                  {/** MINT BUTTON */}
+                  <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint</button>
+
+                </Col>
+              </Row>
+            </Container>
+          :
+          <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
           }
         </>
-        /** If Wallet NOT Connected */
-        :
-        <Waiter spinner={false} msg={"Please connect your wallet ⚡"}/>
       }
     </div>
   );

@@ -3,9 +3,15 @@ $grey: #212529;
 $light: rgb(206, 225, 253);
 $lightOpacity: rgb(206, 225, 253, 0.05);
 $success: rgb(255, 159, 156);
+ 
 * {
   font-family: 'Roboto Mono', monospace!important;
 }
+
+.ts {
+  text-shadow: 0px 0px 10px rgba(0,0,0,1);
+}
+
 $theme-colors: (
   primary: $light,
   dark: $grey,

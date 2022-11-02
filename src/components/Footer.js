@@ -3,16 +3,16 @@ import { React, useEffect, useState } from 'react';
 import Navbar from "react-bootstrap/Navbar";
 
 
-const Footter = (props) => {
+const Footer = (props) => {
 
   return (
     <Navbar bg="dark" variant="light" className="py-3 px-3" fixed="bottom">
       <Navbar.Collapse className="justify-content-end">
-        <a style={{textDecoration: "none"}} className="text-light" href=""><small style={{fontSize: "11px"}}>Powered by {props.title}</small></a>
+        <a style={{textDecoration: "none"}} target="_blank" rel="noreferrer" className="text-light" href="https://twitter.com/dalookup"><small style={{fontSize: "12px"}}>Made with ❤ by {props.title}</small></a>
       </Navbar.Collapse>
     </Navbar>
     ); 
      
   };
 
-  export default Footter; 
+  export default Footer; 

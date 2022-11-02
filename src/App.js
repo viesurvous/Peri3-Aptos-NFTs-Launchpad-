@@ -28,11 +28,10 @@ const App = () => {
     new FletchWalletAdapter()
   ];
 
-  console.log(wallets);
   return (
     <WalletProvider
       wallets={wallets}
-      autoConnect={false}
+      autoConnect={true}
       onError={(error) => {
         console.log('Handle Error Message', error);
       }}>

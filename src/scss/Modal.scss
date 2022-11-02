@@ -4,16 +4,16 @@
     .option {
         border: none;
         transition: all 0.2s ease-in-out;
-        background-color: $grey;
+        background-color: lighten($grey, 7.5%);
         img {
             width: 30px;
             margin-right: 25px;
             transition: all 0.2 ease-in-out;
         }
         &:hover {
-            padding: 20px 30px;
             opacity: 0.95;
-            background-color: darken($grey, 4%);
+            background-color: $grey;
+            transform: scale(1.02);
         }
 
     }

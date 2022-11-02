@@ -1,10 +1,10 @@
 import React from "react";
 
 const ProgressBar = (props) => {
-    const { bgcolor, completed, soldOut } = props;
+    const { bgcolor, completed, itemsLeft } = props;
 
     const containerStyles = {
-        height: 30,
+        height: 40,
         width: '100%',
         backgroundColor: "rgb(206, 225, 253, 0.05)",
         borderRadius: 5,
@@ -25,7 +25,7 @@ const ProgressBar = (props) => {
     padding: 0,
     color: 'white',
     fontWeight: 'bold',
-    lineHeight: "29px",
+    lineHeight: "39px",
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)"
@@ -33,7 +33,7 @@ const ProgressBar = (props) => {
     
   return (
     <div style={containerStyles}>
-      <span style={labelStyles}>{completed < 100 ? `${completed}%` : "SOLD OUT"}</span>
+      <span style={labelStyles}>{completed < 100 ? `${completed}% ` +  props.itemsLeft : "SOLD OUT"}</span>
     <div style={fillerStyles}></div>
   </div>
   );

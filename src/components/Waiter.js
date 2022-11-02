@@ -12,7 +12,7 @@ const Waiter = (props) => {
             </div>
           }
           {props.msg &&
-            <h4 className="d-block h4 info-inner mt-3">
+            <h4 className="d-block h4 text-center info-inner mt-3">
               {props.msg}
             </h4>
           }

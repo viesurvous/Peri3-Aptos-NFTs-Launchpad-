@@ -4,6 +4,8 @@ import { useWallet } from '@manahippo/aptos-wallet-adapter';
 
 import Navigation from "./Navigation";
 import Home from "./Home";
+import Content from "./Content";
+
 import MintingApplication from "./MintingApplication";
 import Footer from "./Footer";
 
@@ -16,11 +18,14 @@ const Layout = (props) => {
 
   return (
     <>
-      <Navigation title={launchpad} logo={Logo}/>
+      <Navigation title={launchpad} logo={Logo} fixed={wallet.connected ? "top" : ""}/>
       {wallet.connected ? 
       <MintingApplication/>
         :
-      <Home logo={Logo} title={launchpad}/>
+       <> 
+        <Home logo={Logo} title={launchpad}/>
+        <Content title={launchpad}/>
+      </>
       }
       <Footer title={launchpad}/>
     </>

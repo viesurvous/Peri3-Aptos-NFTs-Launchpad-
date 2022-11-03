@@ -2,16 +2,19 @@
     border: 10px solid $lightOpacity;
 }
 
-.collection-cover_picture {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-}
+
 
 
 .mw-992 {
     max-width: 992px!important;
+    .collection-cover_picture {
+        transition: 0.4s ease-in-out;
+    }
+    &:hover {
+        .collection-cover_picture {
+        transform: scale(1.1);
+        }
+    }
 }
 
 ** {

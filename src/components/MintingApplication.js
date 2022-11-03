@@ -1,18 +1,24 @@
 import { React, useEffect, useState } from 'react';
 
 import Waiter from "./Waiter";
+import ProgressBar from "./ProgressBar"
 
 import { Container, Col, Row } from "react-bootstrap";
-import ProgressBar from "./ProgressBar"
 import Modal from "react-bootstrap/Modal"
+import Form from 'react-bootstrap/Form';
+import Badge from 'react-bootstrap/Badge';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { FaTwitter } from 'react-icons/fa';
+import { FaDiscord } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
 
 import { AptosClient } from "aptos";
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import cmHelper from "./helpers/candyMachineHelper"
-import {candyMachineAddress, collectionName, collectionCoverUrl, NODE_URL, CONTRACT_ADDRESS, COLLECTION_SIZE} from "./helpers/candyMachineInfo"
+import {candyMachineAddress, collectionName, collectionDescription, collectionSocials, collectionCoverUrl, NODE_URL, CONTRACT_ADDRESS, COLLECTION_SIZE} from "./helpers/candyMachineInfo"
 
 const aptosClient = new AptosClient(NODE_URL);
 const autoCmRefresh = 10000;
@@ -145,24 +151,44 @@ const MintingApplication = (props) => {
         <>
           {!mintInfo.minting ? 
             <Container className="mw-992">
-              <Row className="rounded-4 shadow border-row mx-auto">
+              <Row className="rounded-4 shadow border-row mx-auto overflow-hidden">
                 {/** Collection Cover */}
-                <Col md="6" className={"py-0 px-0 d-flex justify-content-center align-items-center"}>
+                <Col md="6" className={"py-0 px-0 d-flex justify-content-center align-items-center overflow-hidden"}>
                   {collectionCoverUrl ? 
-                    <img className="w-100" src={collectionCoverUrl}/>
+                    <img className="w-100 collection-cover_picture" src={collectionCoverUrl}/>
                     :
                     <Waiter spinner={true} customColor={"rgba(255, 159, 156, 0.7)"}/>
                   }
                 </Col>
                 {/** Collection Mint Application */}
                 <Col md="6"className="p-3">
-                  <div className="">
-                    {mintInfo.numToMint}
-                      <input min={1} max={candyMachineData.data.maxMintsPerWallet === undefined ? 10 : Math.min(candyMachineData.data.maxMintsPerWallet, candyMachineData.data.numUploadedTokens - candyMachineData.data.numMintedTokens)} value={mintInfo.numToMint} onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})} />
-                      <h5>Item price :  {candyMachineData.data.mintFee} APT</h5>
-                      <h5>Total : {price} APT</h5>
+                    {/** TODO */}
+                    <Row>
+                      <Col sm="12" className="position-relative">
+                        <div className="collection-info_header d-flex align-items-center justify-content-between mb-2">
+                          <h4 className="fw-bolder m-0">{collectionName}</h4>
+                          <div className="socials">
+                            <a className="mx-2" target="_blank" rel="noreferrer" href={collectionSocials.discord}><FaDiscord size="24" color="white"/></a>
+                            <a className="mx-2" target="_blank" rel="noreferrer" href={collectionSocials.twitter}><FaTwitter size="24" color="white"/></a>
+                            <a className="mx-2" target="_blank" rel="noreferrer" href={collectionSocials.web}><FaGlobe size="24" color="white"/></a>
+
+                            <Badge bg="primary">{candyMachineData.data.mintFee}</Badge>
+                          </div>
+                        </div>
+                        <p className="text-justify" style={{fontSize : "16px"}}>{collectionDescription}</p>
+                      </Col>
+                    </Row>
+                    <>
+                      <Form.Label>Mint {mintInfo.numToMint}</Form.Label>
+                      <Form.Range 
+                        min={2} 
+                        max={10}
+                        value={mintInfo.numToMint} 
+                        onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})}
+                      />
+                    </>
+                      <h5>Total : </h5>
                       <h5>Minted : {candyMachineData.data.numMintedTokens} / {COLLECTION_SIZE}</h5>
-                  </div>
                     
                   {/** MINT STATE! */}
                   {timeLeftToMint.public === "LIVE" ? <span className={""}>LIVE</span> : <span className={""}> {timeLeftToMint.public.days + "d : " + timeLeftToMint.public.hours + "h : " + timeLeftToMint.public.minutes + "m : " + timeLeftToMint.public.seconds + "s"}</span>}
@@ -175,7 +201,21 @@ const MintingApplication = (props) => {
 
                 </Col>
               </Row>
+
+              {/** TODO */}
+              <Modal show={mintInfo.success} onHide={() => setMintInfo({...mintInfo, success: false, mintedNfts: []})} centered size="lg">
+                <Modal.Body className="pt-5 pb-3">
+                    <div className="my-5" style={{flexWrap: "wrap"}}>
+                      {mintInfo.mintedNfts ? "true":"false"}
+                        {mintInfo.mintedNfts.map(mintedNft => <div key={mintedNft.name} className={`d-flex flex-column mx-3`}>
+                            <img className="w-25" src={mintedNft.imageUri === null ? "" : mintedNft.imageUri} />
+                            <h5 className="text-white text-center mt-2">{mintedNft.name}</h5>¬
+                        </div>)}
+                    </div>
+                </Modal.Body>
+              </Modal>
             </Container>
+
           :
           <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
           }

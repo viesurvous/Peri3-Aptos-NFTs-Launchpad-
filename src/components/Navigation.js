@@ -10,11 +10,13 @@ const Navigation = (props) => {
   const wallet = useWallet();
 
   return (
-    <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light" fixed="top">
-      <Navbar.Brand>
-          <img style={{width: "35px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
-        <span className="me-1">{props.title}</span>
-        <small style={{fontSize: "12px"}}>beta</small>
+    <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light" fixed={props.fixed}>
+      <Navbar.Brand className="d-flex align-items-center">
+        <img style={{width: "35px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
+        <div className="brand-name">
+          <span className="me-1">{props.title}</span>
+          <small style={{fontSize: "12px"}}>v0.1</small>
+        </div>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">

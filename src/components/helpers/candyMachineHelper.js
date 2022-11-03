@@ -21,8 +21,8 @@ async function getCandyMachineCollectionInfo(
 ) {
     const response = await axios.get(`${NODE_URL}/accounts/${cmResourceAccount}/resources`);
     const cmResourceAccountResources = response.data;
-
-    const collectionInfo = {}
+    const collectionInfo = {};
+    
     for (const resource of cmResourceAccountResources) {
         if (resource.type === "0x3::token::Collections") {
             collectionInfo.numUploadedTokens = resource.data.create_token_data_events.counter;

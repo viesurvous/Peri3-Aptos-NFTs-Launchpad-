@@ -179,7 +179,7 @@ const MintingApplication = (props) => {
                       </Col>
                     </Row>
                     <>
-                      <Form.Label>Mint {mintInfo.numToMint}</Form.Label>
+                      <Form.Label>Mint {mintInfo.numToMint}</Form.Label> 
                       <Form.Range 
                         min={2} 
                         max={10}

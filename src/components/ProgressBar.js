@@ -4,7 +4,7 @@ const ProgressBar = (props) => {
     const { bgcolor, completed, itemsLeft } = props;
 
     const containerStyles = {
-        height: 40,
+        height: 30,
         width: '100%',
         backgroundColor: "rgb(206, 225, 253, 0.05)",
         borderRadius: 5,
@@ -25,7 +25,7 @@ const ProgressBar = (props) => {
     padding: 0,
     color: 'white',
     fontWeight: 'bold',
-    lineHeight: "39px",
+    lineHeight: "30px",
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)"

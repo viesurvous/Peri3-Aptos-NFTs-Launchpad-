@@ -66,11 +66,13 @@ async function getCandyMachineConfigData(
 
 async function getMintedNfts(aptosClient, collectionTokenDataHandle, cmResourceAccount, collectionName, txInfo) {
     const mintedNfts = [];
+    console.log(txInfo.hash);
     for (const event of txInfo.events) {
         if (event["type"] !== "0x3::token::MintTokenEvent") continue
         const mintedNft = {
             name: event["data"]["id"]["name"],
-            imageUri: null
+            imageUri: null,
+            tx: txInfo.hash
         }
         try {
             mintedNft.imageUri = (await aptosClient.getTableItem(collectionTokenDataHandle, {
@@ -88,7 +90,6 @@ async function getMintedNfts(aptosClient, collectionTokenDataHandle, cmResourceA
         mintedNfts.push(mintedNft)
     }
 
-    console.log("Minted NFTs")
     console.log(mintedNfts)
     return mintedNfts
 }

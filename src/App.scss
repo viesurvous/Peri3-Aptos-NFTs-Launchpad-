@@ -4,5 +4,7 @@
 @import "./scss/Mint.scss";
 @import "./scss/Navigation.scss";
 
-
 @import '~bootstrap/scss/bootstrap';
+
+$form-range-track-bg: rgb(206, 225, 253, 0.05)!important;
+$form-range-track-border-radius:  0rem;

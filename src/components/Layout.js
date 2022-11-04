@@ -10,7 +10,7 @@ import MintingApplication from "./MintingApplication";
 import Footer from "./Footer";
 
 import Logo from "../assets/img/logo.png";
-const launchpad = "TEST";
+const launchpad = "Layout3";
 
 const Layout = (props) => {
 

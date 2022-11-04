@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { Container, Col, Row } from "react-bootstrap";
-import { collectionName } from "./helpers/candyMachineInfo"
+import { collectionCoverUrl, collectionName } from "./helpers/candyMachineInfo"
 import Logo from "../assets/img/logo.png";
 import ConnectWalletButton from "./helpers/Aptos/ConnectWalletButton";
 import { useWallet } from "@manahippo/aptos-wallet-adapter"
@@ -23,7 +23,7 @@ return (
                 </Col>
                 <Col sm={12} md={6} className="d-none d-md-block">
                     <blockquote className="d-block launchpad-informations my-4 text-center">
-                        <img src={Logo} className={"d-block w-50 mx-auto my-auto" } style={{filter: "drop-shadow(10px 10px 15px rgba(0,0,0,0.3))"}}/>
+                        <img src={collectionCoverUrl} className={"d-block w-50 mx-auto my-auto" } style={{filter: "drop-shadow(10px 10px 15px rgba(0,0,0,0.3))"}}/>
                         <ConnectWalletButton title={'Mint ' + collectionName} mint={true} mx={"mx-auto mt-4"} connectButton={!wallet.connected} className="d-flex" />
                         <small style={{fontSize: "11px"}}>for free</small>
                     </blockquote>

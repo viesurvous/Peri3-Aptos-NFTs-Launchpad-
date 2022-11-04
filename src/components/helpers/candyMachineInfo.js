@@ -4,11 +4,13 @@ export const collectionDescription = "Gobnuts collection description Gobnuts col
 export const collectionSocials = {
     twitter : "https://twitter.com/gobnutsNFT",
     discord : "https://discord.gg/gobnuts",
-    web : ""
+    web : null
 }
 export const collectionCoverUrl = "https://gobnuts.mypinata.cloud/ipfs/QmPfxMKyPHr9pxdRVM9KoYvxiq9DCaJ2SchzLYxYohUtW8";
-export const mode = "mainnet"; // "dev" or "test" or "mainnet"
+export const collectionBigCoverUrl = "https://gobnuts.mypinata.cloud/ipfs/QmcoDT7yGr8dGVcGNiTVgdhB9EamBNhR5LztGkAptjQ1FU";
 
+export const mode = "mainnet"; // "dev" or "test" or "mainnet"
+export const MaxMint = 10;
 export let NODE_URL;
 export const CONTRACT_ADDRESS = "0xdf5c814388f4162f353e14f6123fcba8f39a958e4a2640e38e9e2c7cdfd2ac1d";
 

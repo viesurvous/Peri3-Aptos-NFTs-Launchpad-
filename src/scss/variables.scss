@@ -2,7 +2,10 @@
 $grey: #212529;
 $light: rgb(206, 225, 253);
 $lightOpacity: rgb(206, 225, 253, 0.05);
-$success: rgb(255, 159, 156);
+$success: rgb(168, 250, 110);
+$danger: rgb(255, 151, 151);
+$warning: rgb(255, 230, 156);
+
  
 * {
   font-family: 'Roboto Mono', monospace!important;
@@ -12,10 +15,13 @@ $success: rgb(255, 159, 156);
   text-shadow: 0px 0px 10px rgba(0,0,0,1);
 }
 
+
+
 $theme-colors: (
   primary: $light,
   dark: $grey,
   light: $light,
-  success: $success
+  success: $success,
+  danger: $danger
 );
 

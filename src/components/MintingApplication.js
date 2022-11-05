@@ -39,6 +39,7 @@ const MintingApplication = (props) => {
         wallet.connect();
     }
   }, [wallet.autoConnect, wallet.wallet, wallet.connect]);
+  
   const incrementMintAmount = async () => {
     const mintfee = document.getElementById("mintfee")
     const mintAmount = document.getElementById("mintAmount")
@@ -94,7 +95,6 @@ const MintingApplication = (props) => {
   const mint = async () => {
     if (wallet.account?.address?.toString() === undefined || mintInfo.minting) return;
 
-    console.log(wallet);
     setMintInfo({...mintInfo, minting: true})
 
     // Generate a transaction
@@ -121,8 +121,12 @@ const MintingApplication = (props) => {
         vm_status: err.message,
       }
     }
+
     handleMintTxResult(txInfo)
-    if (txInfo.success) setCandyMachineData({...candyMachineData, data: {...candyMachineData.data, numMintedTokens: (parseInt(candyMachineData.data.numMintedTokens) + parseInt(mintInfo.numToMint)).toString()}})
+
+    if (txInfo.success) {
+      setCandyMachineData({...candyMachineData, data: {...candyMachineData.data, numMintedTokens: (parseInt(candyMachineData.data.numMintedTokens) + parseInt(mintInfo.numToMint)).toString()}})
+    } 
   }
 
   async function handleMintTxResult(txInfo) {
@@ -198,13 +202,14 @@ const MintingApplication = (props) => {
   const percentageMinted = 100 * candyMachineData.data.numMintedTokens / COLLECTION_SIZE;
 
   return (
-    <div className="main bg-dark text-white d-flex align-items-center justify-content-center vh-100">
+    <div className={`${props.height < 768 ? "" : "vh-100"}` + " main bg-dark text-white d-flex align-items-center justify-content-center"}>
       {isFetchignCmData ?  
         <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
       : 
         <>
-          {!mintInfo.minting ? 
-          <>
+          {mintInfo.minting ? 
+          <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
+          :
             <Container className="mw-992">
               <Row className="rounded-4 shadow border-row mx-auto overflow-hidden">
                 {/** Collection Cover */}
@@ -239,8 +244,13 @@ const MintingApplication = (props) => {
                         </div>
                       </div>
                     </Col>
-                    {/** RANGE & NUMTOMINT **/}
-                    <Col sm="12" className="position-relative my-2">
+
+                  </Row>
+
+                  {/** MINT PHASES **/}
+                  <Row>
+                                        {/** RANGE & NUMTOMINT **/}
+                                        <Col sm="12" className="position-relative my-2">
                       {/** Mint Values */}
                         <div className="collection-info_ToMint">
                           <span className="fw-bolder m-0 fs-5">Cart</span>
@@ -260,16 +270,12 @@ const MintingApplication = (props) => {
                           </div>
                         </div>
                     </Col>
-                  </Row>
-
-                  {/** MINT PHASES **/}
-                  <Row>
                     <Col sm="12" className="position-relative my-2">
                       <div className="collection-info_header d-block-sm d-md-flex-column align-items-center justify-content-between">
                         <span className="d-block fw-bolder m-0 fs-5">Mint phase</span>
                       </div>
                       {/** PRESALE */}
-                      <div className="my-3 d-block-sl d-md-flex align-items-center justify-content-between">
+                      <div className="my-2 d-block-sl d-md-flex align-items-center justify-content-between">
                         <span>Presale</span>
                         {timeLeftToMint.public === "LIVE" ? 
                           <Badge className="bg-danger text-dark mx-2"><span className="m-0 fw-bold fs-6">ENDED</span></Badge>
@@ -340,10 +346,6 @@ const MintingApplication = (props) => {
                 </Modal.Body>
               </Modal>
             </Container>
-          </>
-
-          :
-          <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
           }
         </>
       }

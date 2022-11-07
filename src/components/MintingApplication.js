@@ -18,7 +18,7 @@ import { FaGlobe } from 'react-icons/fa';
 import { AptosClient } from "aptos";
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import cmHelper from "./helpers/candyMachineHelper"
-import {candyMachineAddress, collectionName, collectionDescription, collectionSocials, collectionBigCoverUrl, MaxMint, collectionCoverUrl, NODE_URL, CONTRACT_ADDRESS, COLLECTION_SIZE} from "./helpers/candyMachineInfo"
+import {candyMachineAddress, collectionName, SERVICE_NAME, collectionDescription, collectionSocials, collectionBigCoverUrl, MaxMint, collectionCoverUrl, NODE_URL, CONTRACT_ADDRESS, COLLECTION_SIZE} from "./helpers/candyMachineInfo"
 
 const aptosClient = new AptosClient(NODE_URL);
 const autoCmRefresh = 100000;
@@ -40,6 +40,11 @@ const MintingApplication = (props) => {
     }
   }, [wallet.autoConnect, wallet.wallet, wallet.connect]);
   
+
+  const [decActive, setDecActive] = useState(false);
+  const [incActive, setIncActive] = useState(true);
+  const [notificationActive, setNotificationActive] = useState(false);
+
   const incrementMintAmount = async () => {
     const mintfee = document.getElementById("mintfee")
     const mintAmount = document.getElementById("mintAmount")
@@ -92,15 +97,24 @@ const MintingApplication = (props) => {
     }
   }
 
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+  }
+
   const mint = async () => {
+    if (wallet.account?.address?.toString() === undefined) {
+      setNotificationActive(current => !current);
+      await timeout(3000);
+      setNotificationActive(current => !current);
+    }
     if (wallet.account?.address?.toString() === undefined || mintInfo.minting) return;
 
+    console.log(wallet.account?.address?.toString());
     setMintInfo({...mintInfo, minting: true})
-
-    // Generate a transaction
+    // Generate a transactions
     const payload = {
       type: "entry_function_payload",
-      function: `${CONTRACT_ADDRESS}::candy_machine_v2::mint_tokens`,
+      function: `${CONTRACT_ADDRESS}::${SERVICE_NAME}::mint_tokens`,
       type_arguments: [],
       arguments: [
       	candyMachineAddress,
@@ -110,23 +124,18 @@ const MintingApplication = (props) => {
     };
 
     let txInfo;
-
     try {
       const txHash = await wallet.signAndSubmitTransaction(payload);
       console.log(txHash);
-      txInfo = await aptosClient.waitForTransactionWithResult(txHash.hash);
+      txInfo = await aptosClient.waitForTransactionWithResult(txHash.hash)
     } catch (err) {
       txInfo = {
         success: false,
         vm_status: err.message,
       }
     }
-
     handleMintTxResult(txInfo)
-
-    if (txInfo.success) {
-      setCandyMachineData({...candyMachineData, data: {...candyMachineData.data, numMintedTokens: (parseInt(candyMachineData.data.numMintedTokens) + parseInt(mintInfo.numToMint)).toString()}})
-    } 
+    if (txInfo.success) setCandyMachineData({...candyMachineData, data: {...candyMachineData.data, numMintedTokens: (parseInt(candyMachineData.data.numMintedTokens) + parseInt(mintInfo.numToMint)).toString()}})
   }
 
   async function handleMintTxResult(txInfo) {
@@ -145,19 +154,23 @@ const MintingApplication = (props) => {
         const txStatusError = txInfo.vm_status;
         console.error(`Mint not successful: ${txStatusError}`);
         let errorMessage = handledErrorMessages.get(txStatusError);
-        errorMessage = errorMessage === undefined ? `Mint aborted : ${txStatusError}` : errorMessage;
+        errorMessage = errorMessage === undefined ? "Unkown error occured. Try again." : errorMessage;
 
         toast.error(errorMessage);
     } else {
-        mintedNfts = await cmHelper.getMintedNfts(aptosClient, candyMachineData.data.tokenDataHandle, candyMachineData.data.cmResourceAccount, collectionName, txInfo)
+        mintedNfts = await cmHelper.getMintedNfts(aptosClient, candyMachineData.data.tokenDataHandle, candyMachineData.data.cmResourceAccount, collectionName, txInfo);
+        console.log(mintedNfts);
         toast.success("Minting success!")
     }
 
     
     setMintInfo({...mintInfo, minting: false, success: mintSuccess, mintedNfts})
-  }
+}
+
+
 
   async function fetchCandyMachineData(indicateIsFetching = false) {
+    console.log("Fetching candy machine data...")
     if (indicateIsFetching) setIsFetchignCmData(true)
     const cmResourceAccount = await cmHelper.getCandyMachineResourceAccount();
     if (cmResourceAccount === null) {
@@ -179,25 +192,34 @@ const MintingApplication = (props) => {
     const currentTime = Math.round(new Date().getTime() / 1000);
     setTimeLeftToMint({timeout : mintTimersTimeout, presale: cmHelper.getTimeDifference(currentTime, candyMachineData.data.presaleMintTime), public: cmHelper.getTimeDifference(currentTime, candyMachineData.data.publicMintTime)})
   }
- 
-  useEffect(() => { 
-    fetchCandyMachineData(true)
-    setInterval(fetchCandyMachineData, autoCmRefresh)
-  }, [])
+
+ useEffect(() => {
+    fetchCandyMachineData();
+    async function fetchCandyMachineData() {
+        const cmResourceAccount = await cmHelper.getCandyMachineResourceAccount();
+        const collectionInfo = await cmHelper.getCandyMachineCollectionInfo(cmResourceAccount);
+        const configData = await cmHelper.getCandyMachineConfigData(collectionInfo.candyMachineConfigHandle);
+        setCandyMachineData({...candyMachineData, data: {cmResourceAccount, ...collectionInfo, ...configData}})
+    }
+    const interval = setInterval(() => {
+        fetchCandyMachineData();
+    }, 5000);
+    return () => clearInterval(interval);
+    }, []);
 
   useEffect(() => {
     clearTimeout(timeLeftToMint.timeout)
-    verifyTimeLeftToMint() 
-    console.log(candyMachineData.data);
-    
+    verifyTimeLeftToMint()
+    console.log(candyMachineData.data)
   }, [candyMachineData])
 
-
+  // useEffect(() => {
+  //   setCanMint(wallet.connected && candyMachineData.data.isPublic && parseInt(candyMachineData.data.numUploadedTokens) > parseInt(candyMachineData.data.numMintedTokens) && timeLeftToMint.presale === "LIVE")
+  // }, [wallet, candyMachineData, timeLeftToMint])
   useEffect(() => {
-    setCanMint(true);
-
+    setCanMint(true)
   }, [wallet, candyMachineData, timeLeftToMint])
-
+  
   const cartTotalPrice = (candyMachineData.data.mintFee * mintInfo.numToMint).toFixed(2);
   const percentageMinted = 100 * candyMachineData.data.numMintedTokens / COLLECTION_SIZE;
 
@@ -240,42 +262,23 @@ const MintingApplication = (props) => {
                           <a target="_blank" rel="noreferrer" href={collectionSocials.web}><FaGlobe size="18" className="mx-2" color="white"/></a>
                           : <FaGlobe size="18" className="mx-2" color="rgba(255,255,255,0.3"/>
                           }
-                          <Badge bg="white text-dark mx-2"><p className="m-0 fw-bold fs-6">{candyMachineData.data.mintFee} APT</p></Badge>
+                          <Badge bg="white text-dark mx-2"><p className="m-0 fw-bold fs-6">{candyMachineData.data.mintFee / 100000} APT</p></Badge>
                         </div>
                       </div>
                     </Col>
-
                   </Row>
 
                   {/** MINT PHASES **/}
                   <Row>
-                                        {/** RANGE & NUMTOMINT **/}
-                                        <Col sm="12" className="position-relative my-2">
-                      {/** Mint Values */}
-                        <div className="collection-info_ToMint">
-                          <span className="fw-bolder m-0 fs-5">Cart</span>
-                          <div className="mx-auto d-flex align-items-center justify-content-between w-100">
-                            <Form.Label className="m-0 fs-6">{collectionName} x {mintInfo.numToMint}</Form.Label> 
-                            <Form.Range 
-                              bsPrefix={'toto'}
-                              min={1} 
-                              max={candyMachineData.data.maxMintsPerWallet === !undefined ? 5 : candyMachineData.data.maxMintsPerWallet}
-                              value={mintInfo.numToMint} 
-                              onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})}
-                              />
-                          </div>
-                          <div className="mx-auto d-flex align-items-center justify-content-between w-100">
-                          <Form.Label className="m-0 fs-6">Total</Form.Label> 
-                          <Form.Label className="m-0 fs-6">{cartTotalPrice} APT</Form.Label> 
-                          </div>
-                        </div>
-                    </Col>
+                    {/** RANGE & NUMTOMINT **/}
+                   
                     <Col sm="12" className="position-relative my-2">
                       <div className="collection-info_header d-block-sm d-md-flex-column align-items-center justify-content-between">
                         <span className="d-block fw-bolder m-0 fs-5">Mint phase</span>
                       </div>
                       {/** PRESALE */}
-                      <div className="my-2 d-block-sl d-md-flex align-items-center justify-content-between">
+
+                      <div className={`${timeLeftToMint.public === "LIVE" ? "opacity-25" : ""}` + " my-2 pb-2 d-flex align-items-center justify-content-between"}>
                         <span>Presale</span>
                         {timeLeftToMint.public === "LIVE" ? 
                           <Badge className="bg-danger text-dark mx-2"><span className="m-0 fw-bold fs-6">ENDED</span></Badge>
@@ -290,7 +293,7 @@ const MintingApplication = (props) => {
                         }
                       </div>                  
                       {/** PUBLIC */}
-                      <div className="mt-2 d-block-sl d-md-flex align-items-center justify-content-between">
+                      <div className="mt-2 d-flex align-items-center justify-content-between">
                         <span>Public</span>
                         {!timeLeftToMint.public === "LIVE" ? 
                           <Badge className="bg-danger white text-dark mx-2"><span className="m-0 fw-bold fs-6">ENDED</span></Badge>
@@ -314,15 +317,41 @@ const MintingApplication = (props) => {
                       </div>
                       {/** PROGRESS BAR **/}
                       <div className="mt-2">
-                        <ProgressBar bgcolor={percentageMinted < 75 ? "#74f7de" : "rgb(255, 159, 156)"} completed={percentageMinted.toFixed(2)} itemsLeft={candyMachineData.data.numMintedTokens +"/"+ COLLECTION_SIZE}/>
+                        <ProgressBar bgcolor={percentageMinted < 75 ? "#74f7de" : "rgb(255, 159, 156)"} completed={percentageMinted != undefined && percentageMinted.toFixed(2)} itemsLeft={candyMachineData.data.numMintedTokens +"/"+ COLLECTION_SIZE}/>
                       </div>
+                    </Col>
+                    <Col sm="12" className="position-relative my-2">
+                      {/** Mint Values */}
+                        <div className="collection-info_ToMint">
+                          <span className="fw-bolder m-0 fs-5">Cart</span>
+                          <div className="mx-auto d-flex align-items-center justify-content-between w-100">
+                            <Form.Label className="m-0 fs-6">{collectionName} x {mintInfo.numToMint}</Form.Label> 
+                            <Form.Range 
+                              bsPrefix={'range-'}
+                              min={1} 
+                              variant={"success"}
+                              max={candyMachineData.data.maxMintsPerWallet === !undefined ? 5 : candyMachineData.data.maxMintsPerWallet}
+                              value={mintInfo.numToMint} 
+                              onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})}
+                              />
+                          </div>
+                          <div className="mx-auto d-flex align-items-center justify-content-between w-100">
+                          <Form.Label className="m-0 fs-6">Total</Form.Label> 
+                          <Form.Label className="m-0 fs-6">{cartTotalPrice} APT</Form.Label> 
+                          </div>
+                        </div>
                     </Col>
                   </Row>   
 
                   {/** MINT BUTTON **/} 
                   <Row>
                     <Col sm="12" className="position-relative my-2">
+                    {timeLeftToMint.presale === "LIVE" || timeLeftToMint.public === "LIVE" ? 
                       <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint (max. {candyMachineData.data.maxMintsPerWallet})</button>
+                      :
+                      <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"}>Soon</button>
+
+                    }
                     </Col>
                   </Row>
                 </Col>
@@ -337,8 +366,7 @@ const MintingApplication = (props) => {
                         <div key={mintedNft.name} className={"d-flex flex-column col-sm-12 col-md-3 col-lg-4"}>
                             <img className="w-100" src={mintedNft.imageUri === null ? "" : mintedNft.imageUri} />
                             <p>
-                              {mintedNft.hash}
-                              {mintedNft.name ? mintedNft.name : "false"}
+                              {mintedNft.name + " name"}
                               </p>
                         </div>
                         )}

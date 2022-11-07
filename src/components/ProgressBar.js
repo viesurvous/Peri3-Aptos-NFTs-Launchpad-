@@ -33,7 +33,7 @@ const ProgressBar = (props) => {
     
   return (
     <div style={containerStyles}>
-      <span style={labelStyles}>{completed < 100 ? `${completed}% ` +  props.itemsLeft : "SOLD OUT"}</span>
+      <span style={labelStyles}>{completed < 100 || completed != undefined ? `${completed}% ` +  props.itemsLeft : "Sold Out"}</span>
     <div style={fillerStyles}></div>
   </div>
   );

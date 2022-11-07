@@ -11,7 +11,7 @@ import MintingApplication from "./MintingApplication";
 import Footer from "./Footer";
 
 import Logo from "../assets/img/logo.png";
-const launchpad = "Layout3";
+const launchpad = "Peri3";
 
 const Layout = (props) => {
 
@@ -55,7 +55,7 @@ const Layout = (props) => {
               <Content title={launchpad}/>
             </>
           }
-          <Footer title={launchpad}/>
+          <Footer fixed={size.width} title={launchpad}/>
         </>
     </>
   );

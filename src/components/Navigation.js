@@ -13,7 +13,7 @@ const Navigation = (props) => {
   const wallet = useWallet();
 
   return (
-    <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light navigation" fixed={props.fixed < 768 ? "none" : "top"}>
+    <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light navigation justify-content-between" fixed={props.fixed < 768 ? "none" : "top"}>
     <Navbar.Brand className="d-flex align-items-center">
       <img style={{width: "35px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
       <div className="brand-name">
@@ -21,10 +21,13 @@ const Navigation = (props) => {
         <small style={{fontSize: "12px"}}>v0.1</small>
       </div>
     </Navbar.Brand>    
-    <Navbar.Collapse className="justify-content-end">
+    <div className="d-none d-md-flex">
+      <div className={'d-flex justify-content-end flex-row align-items-center'}>
+
       {wallet.connected && <small className="me-3">{wallet.account?.address?.toString().slice(0, 4) + '…' + wallet.account?.address?.toString().slice(62, 66)}</small>}
       <ConnectWalletButton title={"Connect wallet"} connectButton={!wallet.connected} className="d-flex" />
-    </Navbar.Collapse>
+      </div>
+    </div>
 </Navbar>
   );    
 };

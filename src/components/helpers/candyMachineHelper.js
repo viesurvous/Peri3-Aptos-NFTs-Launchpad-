@@ -58,7 +58,6 @@ async function getCandyMachineConfigData(
     const isPublic = cmConfigData.is_public;
     const maxMintsPerWallet = cmConfigData.max_supply_per_user;
     const mintFee = cmConfigData.mint_fee_per_mille / 1000;
-    console.log(cmConfigData.mint_fee_per_mille);
     const presaleMintTime = cmConfigData.presale_mint_time;
     const publicMintTime = cmConfigData.public_mint_time;
 
@@ -73,23 +72,6 @@ async function getMintedNfts(aptosClient, collectionTokenDataHandle, cmResourceA
             name: event["data"]["id"]["name"],
             imageUri: null
         }
-        // try {
-        //     const jsonUrl = (await aptosClient.getTableItem(collectionTokenDataHandle, {
-        //         "key_type": "0x3::token::TokenDataId",
-        //         "value_type": "0x3::token::TokenData",
-        //         "key": {
-        //             "creator": cmResourceAccount,
-        //             "collection": collectionName,
-        //             "name": mintedNft.name
-        //         }
-        //     })).uri
-        //     console.log("11111" + jsonUrl);
-        //     const response = await (await fetch(jsonUrl)).json()
-        //     mintedNft.imageUri = response['image']
-        //     console.log("22222" + mintedNft.imageUri);
-        // } catch (err) {
-        //     console.error(err);
-        // }
         mintedNfts.push(mintedNft)
     }
 

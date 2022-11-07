@@ -225,7 +225,7 @@ const MintingApplication = (props) => {
 
   return (
     <div className={`${props.height < 768 ? "" : "vh-100"}` + " main bg-dark text-white d-flex align-items-center justify-content-center"}>
-      {isFetchignCmData ?  
+      {Object.keys(candyMachineData.data).length === 0 && !isFetchignCmData ?  
         <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
       : 
         <>

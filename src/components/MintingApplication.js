@@ -220,7 +220,7 @@ const MintingApplication = (props) => {
     setCanMint(true)
   }, [wallet, candyMachineData, timeLeftToMint])
   
-  const cartTotalPrice = (candyMachineData.data.mintFee * mintInfo.numToMint).toFixed(2);
+  const cartTotalPrice = (candyMachineData.data.mintFee / 100000 * mintInfo.numToMint).toFixed(2);
   const percentageMinted = 100 * candyMachineData.data.numMintedTokens / COLLECTION_SIZE;
 
   return (

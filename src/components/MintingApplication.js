@@ -228,7 +228,7 @@ const MintingApplication = (props) => {
       {Object.keys(candyMachineData.data).length === 0 && !isFetchignCmData ?  
         <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
       : 
-        <>
+        <> 
           {mintInfo.minting ? 
           <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
           :

@@ -5,7 +5,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 const Waiter = (props) => {
   
     return (
-        <div className="info">
+        <div className="info bg-dark">
           {props.spinner &&
             <div className="d-flex justify-content-center">
               <BounceLoader color={props.customColor ? props.customColor : "rgb(206, 225, 253)" }/>

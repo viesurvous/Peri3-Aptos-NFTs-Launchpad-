@@ -1,4 +1,4 @@
-export const candyMachineAddress = "0x31eada1d8d5b93651e281930886e84eb1eb3e7df2bb65a8d67f6f7e41097096d";
+export const candyMachineAddress = "0x8287156192962b7858eaf36202b46cc1b9c0b0f88406ca37f87b85425bb7a3b6";
 export const collectionName = "Pixel Nuts"; // Case sensitive!
 export const collectionDescription = "";
 export const collectionSocials = {

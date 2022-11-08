@@ -5,16 +5,20 @@ import BounceLoader from "react-spinners/BounceLoader";
 const Waiter = (props) => {
   
     return (
-        <div className="info bg-dark">
+        <div className={`${props.nfts ? "d-flex align-items-center justify-content-center" : " infos"} bg-dark`}>
           {props.spinner &&
-            <div className="d-flex justify-content-center">
+            <div className={`${props.nfts ? "me-4" : "d-flex"} justify-content-center`}>
               <BounceLoader color={props.customColor ? props.customColor : "rgb(206, 225, 253)" }/>
             </div>
           }
           {props.msg &&
-            <h4 className="d-block h4 text-center info-inner mt-3">
+            <>
+              {props.nfts ? <small> {props.msg} </small> : 
+              <p className="d-block h4 text-center info-inner mt-3">
               {props.msg}
-            </h4>
+              </p>
+              }
+            </>
           }
         </div>
     )

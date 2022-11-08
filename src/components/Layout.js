@@ -48,7 +48,9 @@ const Layout = (props) => {
       <Navigation title={launchpad} logo={Logo} fixed={size.width}/>
         <>
           {wallet.connected ? 
+          <div className="bg-dark vh-100">
             <MintingApplication height={size.width}/>
+          </div>
             :
             <> 
               <Home logo={Logo} title={launchpad} />

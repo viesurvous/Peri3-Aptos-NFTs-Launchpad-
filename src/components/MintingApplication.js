@@ -26,6 +26,7 @@ const autoCmRefresh = 100000;
 const MintingApplication = (props) => {
 
   const wallet = useWallet();
+
   const [isFetchignCmData, setIsFetchignCmData] = useState(false)
   const [candyMachineData, setCandyMachineData] = useState({data: {}, fetch: fetchCandyMachineData})
   const [timeLeftToMint, setTimeLeftToMint] = useState({presale: "", public: "", timeout: null})
@@ -109,7 +110,6 @@ const MintingApplication = (props) => {
     }
     if (wallet.account?.address?.toString() === undefined || mintInfo.minting) return;
 
-    console.log(wallet.account?.address?.toString());
     setMintInfo({...mintInfo, minting: true})
     // Generate a transactions
     const payload = {
@@ -213,9 +213,7 @@ const MintingApplication = (props) => {
     console.log(candyMachineData.data)
   }, [candyMachineData])
 
-  // useEffect(() => {
-  //   setCanMint(wallet.connected && candyMachineData.data.isPublic && parseInt(candyMachineData.data.numUploadedTokens) > parseInt(candyMachineData.data.numMintedTokens) && timeLeftToMint.presale === "LIVE")
-  // }, [wallet, candyMachineData, timeLeftToMint])
+
   useEffect(() => {
     setCanMint(true)
   }, [wallet, candyMachineData, timeLeftToMint])
@@ -229,9 +227,7 @@ const MintingApplication = (props) => {
         <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
       : 
         <> 
-          {mintInfo.minting ? 
-          <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
-          :
+
             <Container className="mw-992">
               
               <Row className="rounded-4 shadow border-row mx-auto overflow-hidden">
@@ -348,28 +344,31 @@ const MintingApplication = (props) => {
                   {/** MINT BUTTON **/} 
                   <Row>
                     <Col sm="12" className="position-relative my-2">
-                    {timeLeftToMint.presale === "LIVE" || timeLeftToMint.public === "LIVE" ? 
-                      <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint (max. {candyMachineData.data.maxMintsPerWallet})</button>
+                    {mintInfo.minting ? 
+                      <Waiter spinner={true} nfts={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
                       :
-                      <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"}>Soon</button>
-
+                      <>
+                      {timeLeftToMint.presale === "LIVE" || timeLeftToMint.public === "LIVE" ? 
+                        <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint (max. {candyMachineData.data.maxMintsPerWallet})</button>
+                        :
+                        <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"}>Soon</button>
+                      }
+                      </>
                     }
                     </Col>
                   </Row>
                 </Col>
-
               </Row>
 
               {/** TODO */}
-              <Modal show={mintInfo.success} onHide={() => setMintInfo({...mintInfo, success: false, mintedNfts: []})} centered size="lg">
+              <Modal show={mintInfo.success} onHide={() => setMintInfo({...mintInfo, success: false, mintedNfts: []})} centered>
                 <Modal.Body>
                     <Row className="text-light" style={{flexWrap: "wrap"}}>
                         {mintInfo.mintedNfts.map(mintedNft => 
                         <div key={mintedNft.name} className={"d-flex flex-column col-sm-12 col-md-3 col-lg-4"}>
-
                             <img className="w-100" src={mintedNft.imageUri === null ? "" : mintedNft.imageUri} />
                             <p>
-                              {mintedNft.name + " name"}
+                              {mintedNft.name}
                               </p>
                         </div>
                         )}
@@ -390,7 +389,6 @@ const MintingApplication = (props) => {
                 </Modal.Body>
               </Modal>
             </Container>
-          }
         </>
       }
     </div>

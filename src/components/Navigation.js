@@ -11,9 +11,9 @@ const Navigation = (props) => {
   const [toggleIcon, setToggleIcon] = useState('');
   
   const wallet = useWallet();
-
+  {props.fixed < 768 ? "none" : "top"}
   return (
-    <Navbar bg="dark" variant="dark" className="py-3 px-3 text-light navigation justify-content-between" fixed={props.fixed < 768 ? "none" : "top"}>
+    <Navbar bg="dark" variant="dark" className={`${props.fixed < 768 ? "flex-column" : ""} py-3 px-3 text-light navigation justify-content-between`} fixed={props.fixed < 768 ? "none" : "top"}>
     <Navbar.Brand className="d-flex align-items-center">
       <img style={{width: "35px", marginRight: "10px"}} className="navbar-link_logo" src={props.logo}/>
       <div className="brand-name">
@@ -21,7 +21,7 @@ const Navigation = (props) => {
         <small style={{fontSize: "12px"}}>v0.1</small>
       </div>
     </Navbar.Brand>    
-    <div className="d-none d-md-flex">
+    <div className={`${props.fixed < 768 ? "mt-3" : ""} d-md-flex`}>
       <div className={'d-flex justify-content-end flex-row align-items-center'}>
 
       {wallet.connected && <small className="me-3">{wallet.account?.address?.toString().slice(0, 4) + '…' + wallet.account?.address?.toString().slice(62, 66)}</small>}

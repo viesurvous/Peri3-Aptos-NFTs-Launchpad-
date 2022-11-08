@@ -224,7 +224,7 @@ const MintingApplication = (props) => {
   const percentageMinted = 100 * candyMachineData.data.numMintedTokens / COLLECTION_SIZE;
 
   return (
-    <div className={`${props.height < 768 ? "" : "vh-100"}` + " main bg-dark text-white d-flex align-items-center justify-content-center"}>
+    <div className={`${props.height < 768 ? "" : "vh-100"}` + " main bg-dark text-white d-flex align-items-center justify-content-center py-5"}>
       {Object.keys(candyMachineData.data).length === 0 && !isFetchignCmData ?  
         <Waiter spinner={true} msg={"Fetching program data"} customColor={"rgba(255, 159, 156, 0.7)"}/>
       : 
@@ -233,6 +233,7 @@ const MintingApplication = (props) => {
           <Waiter spinner={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
           :
             <Container className="mw-992">
+              
               <Row className="rounded-4 shadow border-row mx-auto overflow-hidden">
                 {/** Collection Cover */}
                 <Col md="6" className={"py-0 px-0 d-flex justify-content-center align-items-center overflow-hidden"}>
@@ -286,9 +287,9 @@ const MintingApplication = (props) => {
                           <>
                           {timeLeftToMint.presale === "LIVE" 
                           ?
-                          <Badge className="bg-danger text-dark mx-2"><span className="m-0 fw-bold fs-6">LIVE</span></Badge> 
+                          <Badge className="bg-success text-dark mx-2"><span className="m-0 fw-bold fs-6">LIVE</span></Badge> 
                           : 
-                          timeLeftToMint.presale.days + " d : " + timeLeftToMint.presale.hours + " h : " + timeLeftToMint.presale.minutes + " m : " + timeLeftToMint.presale.seconds + " s"}
+                          timeLeftToMint.presale.days + "d : " + timeLeftToMint.presale.hours + "h : " + timeLeftToMint.presale.minutes + "m : " + timeLeftToMint.presale.seconds + "s"}
                           </>
                         }
                       </div>                  
@@ -303,7 +304,7 @@ const MintingApplication = (props) => {
                           ?  
                           <Badge className="bg-success text-dark mx-2"><span className="m-0 fw-bold fs-6">LIVE</span></Badge> 
                           : 
-                          timeLeftToMint.public.days + " d : " + timeLeftToMint.public.hours + " h : " + timeLeftToMint.public.minutes + " m : " + timeLeftToMint.public.seconds + " s"}
+                          timeLeftToMint.public.days + "d : " + timeLeftToMint.public.hours + "h : " + timeLeftToMint.public.minutes + "m : " + timeLeftToMint.public.seconds + "s"}
                           </>
                         }
                       </div>
@@ -327,7 +328,8 @@ const MintingApplication = (props) => {
                           <div className="mx-auto d-flex align-items-center justify-content-between w-100">
                             <Form.Label className="m-0 fs-6">{collectionName} x {mintInfo.numToMint}</Form.Label> 
                             <Form.Range 
-                              bsPrefix={'range-'}
+                              bsPrefix={'custom-range'}
+                              className={"range-custom"}
                               min={1} 
                               variant={"success"}
                               max={candyMachineData.data.maxMintsPerWallet === !undefined ? 5 : candyMachineData.data.maxMintsPerWallet}
@@ -364,12 +366,26 @@ const MintingApplication = (props) => {
                     <Row className="text-light" style={{flexWrap: "wrap"}}>
                         {mintInfo.mintedNfts.map(mintedNft => 
                         <div key={mintedNft.name} className={"d-flex flex-column col-sm-12 col-md-3 col-lg-4"}>
+
                             <img className="w-100" src={mintedNft.imageUri === null ? "" : mintedNft.imageUri} />
                             <p>
                               {mintedNft.name + " name"}
                               </p>
                         </div>
                         )}
+                    </Row>
+                    <Row className="text-light">
+                      <Col sm={12}>
+                      <button className={"btn btn-outline-blue d-block mx-auto mt-3 px-3 py-2 w-75 mx-auto"}>
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text=Just minted on @peri3_labs launchpad! Was smooth as f! Try it on https://pixelnuts.peri3.xyz"
+                         className="text-decoration-none text-blue">
+                        <FaTwitter className="me-2"/>
+                          <small>
+                            Share on twitter
+                          </small>
+                        </a>
+                      </button>
+                      </Col>
                     </Row>
                 </Modal.Body>
               </Modal>

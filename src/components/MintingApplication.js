@@ -376,7 +376,7 @@ const MintingApplication = (props) => {
                     <Row className="text-light">
                       <Col sm={12}>
                       <button className={"btn btn-outline-blue d-block mx-auto mt-3 px-3 py-2 w-75 mx-auto"}>
-                        <a target="_blank" href="https://twitter.com/intent/tweet?text=Just minted on @peri3_labs launchpad! Was smooth as f! Try it on https://pixelnuts.peri3.xyz"
+                        <a target="_blank" href="https://twitter.com/intent/tweet?text=Pixel nuts mint on @peri3labs was smooth as f! Try it on https://pixelnuts.peri3.xyz"
                          className="text-decoration-none text-blue">
                         <FaTwitter className="me-2"/>
                           <small>

@@ -6,7 +6,7 @@ export const collectionSocials = {
     discord : "https://discord.gg/gobnuts",
     web : null
 }
-export const collectionCoverUrl = "https://gobnuts.mypinata.cloud/ipfs/QmUeNXaeZhviZejMCihXGf4UNrdvYj8ae6VcBvFpBeDUmL";
+export const collectionCoverUrl = "https://gobnuts.mypinata.cloud/ipfs/Qmew9bik6hkaFU1tcYFdbokWo6Dha3ophL86sBPvCJFm6x";
 export const collectionBigCoverUrl = "https://gobnuts.mypinata.cloud/ipfs/QmcoDT7yGr8dGVcGNiTVgdhB9EamBNhR5LztGkAptjQ1FU";
 
 export const mode = "mainnet"; // "dev" or "test" or "mainnet"

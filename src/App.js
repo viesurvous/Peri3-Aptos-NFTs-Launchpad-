@@ -31,7 +31,7 @@ const App = () => {
   return (
     <WalletProvider
       wallets={wallets}
-      autoConnect={true}
+      autoConnect={false}
       onError={(error) => {
         console.log('Handle Error Message', error);
       }}>

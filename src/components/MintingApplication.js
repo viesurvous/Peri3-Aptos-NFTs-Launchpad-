@@ -228,9 +228,9 @@ const MintingApplication = (props) => {
       : 
         <> 
 
-            <Container className="mw-992">
+            <Container className="mw-992 py-5 my-5">
               
-              <Row className="rounded-4 shadow border-row mx-auto overflow-hidden">
+              <Row className="rounded-4 shadow-md border-row mx-auto overflow-hidden">
                 {/** Collection Cover */}
                 <Col md="6" className={"py-0 px-0 d-flex justify-content-center align-items-center overflow-hidden"}>
                   {collectionCoverUrl ? 
@@ -345,7 +345,7 @@ const MintingApplication = (props) => {
                   <Row>
                     <Col sm="12" className="position-relative my-2">
                     {mintInfo.minting ? 
-                      <Waiter spinner={true} nfts={true} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
+                      <Waiter spinner={true} nfts={true} size={30} msg={"Minting " + mintInfo.numToMint + " " + collectionName } customColor={"#53fade"}/>
                       :
                       <>
                       {timeLeftToMint.presale === "LIVE" || timeLeftToMint.public === "LIVE" ? 

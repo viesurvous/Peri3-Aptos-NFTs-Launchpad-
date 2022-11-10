@@ -13,7 +13,7 @@ const Home = (props) => {
 const wallet = useWallet();
 
 return (
-    <div className="main bg-dark text-white d-block d-md-flex align-items-center justify-content-center vh-100 flex-column py-5 py-md-0">
+    <div className={`${props.height < 768 ? "" : "vh-100"}` + " main bg-dark text-white d-block d-md-flex align-items-center justify-content-center flex-column py-5 py-md-0"}>
         <Container className="mb-5 mt-5">
             <Row>
                 <Col sm={12} md={6}>

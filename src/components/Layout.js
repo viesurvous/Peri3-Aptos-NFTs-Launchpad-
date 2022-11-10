@@ -49,7 +49,7 @@ const Layout = (props) => {
         <>
           {wallet.connected ? 
           <div className="bg-dark vh-100">
-            <MintingApplication height={size.width}/>
+            <MintingApplication xy={size} height={size.width}/>
           </div>
             :
             <> 

@@ -3,7 +3,6 @@ import { React, useEffect, useState } from 'react';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import ConnectWalletButton from "./helpers/Aptos/ConnectWalletButton";
 import Navbar from "react-bootstrap/Navbar";
-import { FaBars } from 'react-icons/fa';
 
 const Navigation = (props) => {
 
@@ -20,6 +19,7 @@ const Navigation = (props) => {
         <span className="me-1">{props.title}</span>
         <small style={{fontSize: "12px"}}>v0.1</small>
       </div>
+      
     </Navbar.Brand>    
     <div className={`${props.fixed < 768 ? "mt-3" : ""} d-md-flex`}>
       <div className={'d-flex justify-content-end flex-row align-items-center'}>

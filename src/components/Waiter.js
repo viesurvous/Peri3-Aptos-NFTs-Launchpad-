@@ -8,7 +8,7 @@ const Waiter = (props) => {
         <div className={`${props.nfts ? "d-flex align-items-center justify-content-center" : " infos"} bg-dark`}>
           {props.spinner &&
             <div className={`${props.nfts ? "me-4" : "d-flex"} justify-content-center`}>
-              <BounceLoader size={props.size ? props.size : "40"} color={props.customColor ? props.customColor : "rgb(206, 225, 253)" }/>
+              <BounceLoader size={props.size ? props.size : "40px"} color={props.customColor ? props.customColor : "rgb(206, 225, 253)" }/>
             </div>
           }
           {props.msg &&

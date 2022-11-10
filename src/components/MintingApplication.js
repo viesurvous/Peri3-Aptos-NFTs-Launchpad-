@@ -7,6 +7,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal"
 import Form from 'react-bootstrap/Form';
 import Badge from 'react-bootstrap/Badge';
+import Confetti from 'react-confetti'
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -361,14 +362,17 @@ const MintingApplication = (props) => {
               </Row>
 
               {/** TODO */}
+              {mintInfo.success && <Confetti className="z-index-100" width={props.xy.width} height={props.xy.height}/>}
               <Modal show={mintInfo.success} onHide={() => setMintInfo({...mintInfo, success: false, mintedNfts: []})} centered>
+
                 <Modal.Body>
+                  <Modal.Header className="text-light">Mint Success!</Modal.Header>
                     <Row className="text-light" style={{flexWrap: "wrap"}}>
                         {mintInfo.mintedNfts.map(mintedNft => 
-                        <div key={mintedNft.name} className={"d-flex flex-column col-sm-12 col-md-3 col-lg-4"}>
+                        <div key={mintedNft.name} className={"d-flex flex-column col-sm-12 my-3"}>
                             <img className="w-100" src={mintedNft.imageUri === null ? "" : mintedNft.imageUri} />
                             <p>
-                              {mintedNft.name}
+                              - {mintedNft.name}
                               </p>
                         </div>
                         )}

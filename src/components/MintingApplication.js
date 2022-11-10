@@ -349,7 +349,7 @@ const MintingApplication = (props) => {
                       :
                       <>
                       {timeLeftToMint.presale === "LIVE" || timeLeftToMint.public === "LIVE" ? 
-                        <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint (max. {candyMachineData.data.maxMintsPerWallet})</button>
+                        <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"} onClick={mint} disabled={!canMint}>Mint</button>
                         :
                         <button className={"btn btn-outline-primary d-block mx-auto mt-3 px-0 py-2 w-100"}>Soon</button>
                       }

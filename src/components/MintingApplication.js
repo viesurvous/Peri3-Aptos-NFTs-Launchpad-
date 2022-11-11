@@ -329,7 +329,7 @@ const MintingApplication = (props) => {
                               className={"range-custom"}
                               min={1} 
                               variant={"success"}
-                              max={candyMachineData.data.maxMintsPerWallet === !undefined ? 5 : candyMachineData.data.maxMintsPerWallet}
+                              max={10}
                               value={mintInfo.numToMint} 
                               onChange={(e) => setMintInfo({...mintInfo, numToMint: e.target.value})}
                               />

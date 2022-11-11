@@ -1,0 +1,237 @@
+
+[
+    {
+    "trait": "Blue",
+    "weight": "1",
+    "occurence": "127 in 1111 editions (11.43 %)"
+  },
+  {
+    "trait": "Cream cheese",
+    "weight": "1",
+    "occurence": "139 in 1111 editions (12.51 %)"
+  },
+  {
+    "trait": "Côte d'Azur",
+    "weight": "1",
+    "occurence": "151 in 1111 editions (13.59 %)"
+  },
+  {
+    "trait": "Green",
+    "weight": "1",
+    "occurence": "121 in 1111 editions (10.89 %)"
+  },
+  {
+    "trait": "Off White Pink",
+    "weight": "1",
+    "occurence": "149 in 1111 editions (13.41 %)"
+  },
+  {
+    "trait": "Orange",
+    "weight": "1",
+    "occurence": "137 in 1111 editions (12.33 %)"
+  },
+  {
+    "trait": "Red",
+    "weight": "1",
+    "occurence": "140 in 1111 editions (12.60 %)"
+  },
+  {
+    "trait": "Yellow",
+    "weight": "1",
+    "occurence": "147 in 1111 editions (13.23 %)"
+  },
+  
+  {
+    "trait": "Blue",
+    "weight": "7",
+    "occurence": "128 in 1111 editions (11.52 %)"
+  },
+  {
+    "trait": "Cream Cheese",
+    "weight": "8",
+    "occurence": "161 in 1111 editions (14.49 %)"
+  },
+  {
+    "trait": "Dead",
+    "weight": "5",
+    "occurence": "107 in 1111 editions (9.63 %)"
+  },
+  {
+    "trait": "Gold",
+    "weight": "5",
+    "occurence": "109 in 1111 editions (9.81 %)"
+  },
+  {
+    "trait": "Green",
+    "weight": "10",
+    "occurence": "179 in 1111 editions (16.11 %)"
+  },
+  {
+    "trait": "Hell",
+    "weight": "5",
+    "occurence": "112 in 1111 editions (10.08 %)"
+  },
+  {
+    "trait": "Purple",
+    "weight": "4",
+    "occurence": "96 in 1111 editions (8.64 %)"
+  },
+  {
+    "trait": "TerraCota",
+    "weight": "7",
+    "occurence": "150 in 1111 editions (13.50 %)"
+  },
+  {
+    "trait": "Zombie",
+    "weight": "3",
+    "occurence": "69 in 1111 editions (6.21 %)"
+  },
+  
+  {
+    "trait": "Gold",
+    "weight": "5",
+    "occurence": "73 in 1111 editions (6.57 %)"
+  },
+  {
+    "trait": "Icy",
+    "weight": "5",
+    "occurence": "71 in 1111 editions (6.39 %)"
+  },
+  {
+    "trait": "None",
+    "weight": "80",
+    "occurence": "807 in 1111 editions (72.64 %)"
+  },
+  {
+    "trait": "Silver",
+    "weight": "5",
+    "occurence": "81 in 1111 editions (7.29 %)"
+  },
+  {
+    "trait": "Vintage",
+    "weight": "5",
+    "occurence": "79 in 1111 editions (7.11 %)"
+  },
+  
+  {
+    "trait": "Blue Beanie",
+    "weight": "5",
+    "occurence": "77 in 1111 editions (6.93 %)"
+  },
+  {
+    "trait": "Blue Cap",
+    "weight": "5",
+    "occurence": "66 in 1111 editions (5.94 %)"
+  },
+  {
+    "trait": "Blue Hat",
+    "weight": "5",
+    "occurence": "70 in 1111 editions (6.30 %)"
+  },
+  {
+    "trait": "Cream Cheese Beanie",
+    "weight": "5",
+    "occurence": "71 in 1111 editions (6.39 %)"
+  },
+  {
+    "trait": "Cream Cheese Cap",
+    "weight": "5",
+    "occurence": "61 in 1111 editions (5.49 %)"
+  },
+  {
+    "trait": "Cream Cheese Hat",
+    "weight": "5",
+    "occurence": "73 in 1111 editions (6.57 %)"
+  },
+  {
+    "trait": "Gold Beanie",
+    "weight": "2",
+    "occurence": "31 in 1111 editions (2.79 %)"
+  },
+  {
+    "trait": "Gold Cap",
+    "weight": "2",
+    "occurence": "36 in 1111 editions (3.24 %)"
+  },
+  {
+    "trait": "Gold Hat1",
+    "weight": "2",
+    "occurence": "32 in 1111 editions (2.88 %)"
+  },
+  {
+    "trait": "Green Beanie",
+    "weight": "5",
+    "occurence": "63 in 1111 editions (5.67 %)"
+  },
+  {
+    "trait": "Green Cap",
+    "weight": "5",
+    "occurence": "67 in 1111 editions (6.03 %)"
+  },
+  {
+    "trait": "Green Hat",
+    "weight": "5",
+    "occurence": "72 in 1111 editions (6.48 %)"
+  },
+  {
+    "trait": "None",
+    "weight": "10",
+    "occurence": "113 in 1111 editions (10.17 %)"
+  },
+  {
+    "trait": "Pirate Hat",
+    "weight": "2",
+    "occurence": "43 in 1111 editions (3.87 %)"
+  },
+  {
+    "trait": "Red Beanie",
+    "weight": "4",
+    "occurence": "58 in 1111 editions (5.22 %)"
+  },
+  {
+    "trait": "Red Cap",
+    "weight": "4",
+    "occurence": "61 in 1111 editions (5.49 %)"
+  },
+  {
+    "trait": "Red Hat",
+    "weight": "4",
+    "occurence": "58 in 1111 editions (5.22 %)"
+  },
+  {
+    "trait": "The Crown",
+    "weight": "1",
+    "occurence": "17 in 1111 editions (1.53 %)"
+  },
+  {
+    "trait": "Viking Hat",
+    "weight": "2",
+    "occurence": "42 in 1111 editions (3.78 %)"
+  },
+  
+  {
+    "trait": "Blue OG",
+    "weight": "2",
+    "occurence": "27 in 1111 editions (2.43 %)"
+  },
+  {
+    "trait": "Dalookup Bubble Gum",
+    "weight": "2",
+    "occurence": "29 in 1111 editions (2.61 %)"
+  },
+  {
+    "trait": "Gold OG",
+    "weight": "1",
+    "occurence": "12 in 1111 editions (1.08 %)"
+  },
+  {
+    "trait": "None",
+    "weight": "94",
+    "occurence": "1031 in 1111 editions (92.80 %)"
+  },
+  {
+    "trait": "White OG",
+    "weight": "1",
+    "occurence": "12 in 1111 editions (1.08 %)"
+  }
+]
